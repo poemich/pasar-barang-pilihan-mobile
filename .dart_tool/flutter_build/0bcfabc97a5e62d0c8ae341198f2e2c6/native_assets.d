@@ -1,0 +1,1 @@
+ C:\\Kuliah\\Term3\\PBP\\pasar_barang_pilihan\\.dart_tool\\flutter_build\\0bcfabc97a5e62d0c8ae341198f2e2c6\\native_assets.yaml: 

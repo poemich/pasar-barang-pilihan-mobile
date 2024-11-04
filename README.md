@@ -1,4 +1,6 @@
-# pasar_barang_pilihan
+# Pasar Barang Pilihan Mobile
+
+## Tugas 7
 
 1. **Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.**  
    - **Stateless Widget**: merupakan widget yang tidak memiliki state dan tidak berubah selama aplikasi berjalan. Widget ini menerima input dari widget induk dan tidak memiliki variabel yang bisa berubah seiring waktu. Contohnya adalah widget `Text` atau `Icon`.
@@ -130,4 +132,13 @@
        }
      }
      ```
-   
+
+### **Referensi**
+
+- **Layouts and Forms**:
+
+  - https://scele.cs.ui.ac.id/pluginfile.php/240691/mod_resource/content/2/09%20-%20Layouts%20and%20Forms.pdf
+
+- **Flutter Documentation**:
+
+  - https://docs.flutter.dev/

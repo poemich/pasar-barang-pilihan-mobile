@@ -1,144 +1,118 @@
 # Pasar Barang Pilihan Mobile
 
-## Tugas 7
+## Tugas 8
 
-1. **Jelaskan apa yang dimaksud dengan stateless widget dan stateful widget, dan jelaskan perbedaan dari keduanya.**  
-   - **Stateless Widget**: merupakan widget yang tidak memiliki state dan tidak berubah selama aplikasi berjalan. Widget ini menerima input dari widget induk dan tidak memiliki variabel yang bisa berubah seiring waktu. Contohnya adalah widget `Text` atau `Icon`.
-   - **Stateful Widget**: widget yang memiliki state dan bisa berubah-ubah saat aplikasi berjalan. Stateful widget bergantung pada class State untuk menangani perubahan yang terjadi. Contoh umum adalah widget `TextField` atau `Checkbox`, yang dapat berubah sesuai input pengguna.
+1. **Apa kegunaan `const` di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?**
 
-   **Perbedaan utama** antara keduanya adalah pada kemampuan untuk mempertahankan state. Stateless widget bersifat statis, sedangkan stateful widget dapat beradaptasi dan berubah berdasarkan interaksi pengguna.
+   `const` digunakan untuk mendefinisikan nilai atau objek yang konstan pada waktu kompilasi, sehingga data tersebut tidak akan berubah selama aplikasi berjalan. Keuntungan dari penggunaan `const` adalah peningkatan performa aplikasi, karena objek `const` hanya dibuat sekali di memori, dan Flutter bisa menghindari pembuatan ulang objek tersebut.
 
-2. **Sebutkan widget apa saja yang kamu gunakan pada proyek ini dan jelaskan fungsinya.**
-   - **Scaffold**: Menyediakan struktur dasar halaman dengan AppBar dan body.
-   - **AppBar**: Bagian atas halaman yang menampilkan judul aplikasi.
-   - **Column**: Untuk menyusun widget secara vertikal, seperti teks dan grid item.
-   - **Row**: Untuk menampilkan beberapa `InfoCard` secara horizontal.
-   - **GridView**: Menampilkan daftar widget `ItemCard` dalam bentuk grid dengan beberapa kolom.
-   - **Card**: Menyediakan tampilan seperti kartu dengan bayangan untuk informasi `NPM`, `Name`, dan `Class`.
-   - **Icon dan Text**: Menampilkan ikon dan teks pada kartu.
-   - **InkWell**: Menangani interaksi tap pada item, seperti menampilkan `SnackBar` ketika tombol ditekan.
+   Penggunaan `const` pada kode:
+   ```dart
+   const Text(
+     'Pasar Barang Pilihan',
+     style: TextStyle(
+       fontSize: 24,
+       fontWeight: FontWeight.bold,
+       color: Colors.white,
+     ),
+   );
+   ```
+   
+   `const` digunakan jika data atau objek bersifat statis dan tidak akan berubah saat runtime, seperti teks tetap atau nilai konstan. Jangan menggunakan `const` jika data bergantung pada input pengguna atau berubah selama aplikasi berjalan.
 
-3. **Apa fungsi dari setState()? Jelaskan variabel apa saja yang dapat terdampak dengan fungsi tersebut.**  
-   `setState()` digunakan pada stateful widget untuk memberitahu Flutter bahwa ada perubahan pada state yang memerlukan update UI. Fungsi ini akan menjalankan ulang `build()` sehingga UI bisa diperbarui. Variabel-variabel yang terdampak adalah variabel yang mendefinisikan tampilan di dalam widget, contohnya variabel yang memuat informasi produk atau status login.
+2. **Jelaskan dan bandingkan penggunaan `Column` dan `Row` pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!**
 
-4. **Jelaskan perbedaan antara const dengan final.**  
-   - **const**: Digunakan untuk nilai yang bersifat konstan secara waktu kompilasi (compile-time constant), artinya nilai tersebut harus sudah diketahui saat kompilasi.
-   - **final**: Digunakan untuk variabel yang hanya dapat diinisialisasi sekali dan bersifat immutable, tetapi nilainya bisa ditentukan saat runtime.
+   `Column` digunakan untuk menyusun widget secara vertikal, sedangkan `Row` untuk menyusun secara horizontal. Keduanya memiliki properti seperti `mainAxisAlignment` dan `crossAxisAlignment` yang membantu dalam mengatur posisi dan jarak antara widget anak di dalamnya.
 
-5. **Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.**
+   Penggunaan `Column` dalam kode:
+   ```dart
+   ...
+   child: Column(
+     crossAxisAlignment: CrossAxisAlignment.center,
+     children: [
+   ...
+   ```
 
-   Berikut langkah-langkah implementasi aplikasi ini:
+   Penggunaan `Row`:
+   ```dart
+   ...
+   Row(
+     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+     children: [
+       Icon(Icons.home_outlined),
+       Icon(Icons.add_shopping_cart),
+       Icon(Icons.logout),
+     ],
+   ),
+   ...
+   ```
 
-   - **Membuat Proyek Flutter Baru**
-     1. Pertama, buat proyek Flutter dengan menjalankan perintah berikut:
-        ```bash
-        flutter create pasar_barang_pilihan
-        cd pasar_barang_pilihan
-        ```
-     2. Atur struktur proyek dengan membuat dua file, yaitu `main.dart` dan `menu.dart` untuk memisahkan UI utama dan tampilan menu.
+3. **Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!**
 
-   - **Membangun Struktur Scaffold pada main.dart**
-     ```dart
-     import 'package:flutter/material.dart';
-     import 'package:pasar_barang_pilihan/menu.dart';
+   Elemen input yang digunakan pada halaman form adalah `TextFormField` untuk memasukkan nama produk, deskripsi, dan harga. Pada Flutter, tersedia elemen input lain seperti `Checkbox`, `Radio`, `Switch`, `Slider`, dan `DropdownButton` yang tidak digunakan pada tugas ini. Elemen-elemen tersebut akan cocok digunakan pada input pilihan 2 opsi, pilihan dari beberapa opsi, atau input rentang nilai.
 
-     void main() {
-       runApp(const MyApp());
-     }
+   Penggunaan `TextFormField` pada kode:
+   ```dart
+   ...
+   Padding(
+     padding: const EdgeInsets.all(8.0),
+     child: TextFormField(
+       decoration: InputDecoration(
+   ...
+   ```
 
-     class MyApp extends StatelessWidget {
-       const MyApp({Key? key}) : super(key: key);
+4. **Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?**
 
-       @override
-       Widget build(BuildContext context) {
-         return MaterialApp(
-           title: 'Pasar Barang Pilihan',
-           theme: ThemeData(primarySwatch: Colors.blue),
-           home: MyHomePage(),
-         );
-       }
-     }
-     ```
+   Tema diatur menggunakan `ThemeData` pada `MaterialApp`, yang membantu menjaga konsistensi warna, font, dan gaya di seluruh aplikasi.
 
-   - **Membangun Tampilan Utama di menu.dart**
-     ```dart
-     class MyHomePage extends StatelessWidget {
-       final List<ItemHomepage> items = [
-         ItemHomepage("Lihat Product", Icons.add_shopping_cart),
-         ItemHomepage("Tambah Product", Icons.add),
-         ItemHomepage("Logout", Icons.logout),
-       ];
+   Implementasi tema pada kode:
+   ```dart
+   ...
+   theme: ThemeData(
+     colorScheme: ColorScheme.fromSwatch(
+       primarySwatch: Colors.blue,
+     ).copyWith(
+       secondary: Colors.lightBlueAccent,
+     ),
+     useMaterial3: true,
+   ),
+   ...
+   ```
 
-       @override
-       Widget build(BuildContext context) {
-         return Scaffold(
-           appBar: AppBar(
-             title: const Text('Pasar Barang Pilihan'),
-           ),
-           body: Padding(
-             padding: const EdgeInsets.all(16.0),
-             child: Column(
-               children: [
-                 Row(
-                   children: [
-                     InfoCard(title: 'NPM', content: '2306245011'),
-                     InfoCard(title: 'Name', content: 'Muhammad Fadhlan Karimuddin'),
-                     InfoCard(title: 'Class', content: 'PBP F'),
-                   ],
-                 ),
-                 Expanded(
-                   child: GridView.count(
-                     crossAxisCount: 3,
-                     children: items.map((item) => ItemCard(item)).toList(),
-                   ),
-                 ),
-               ],
-             ),
-           ),
-         );
-       }
-     }
-     ```
+   Pada aplikasi yang saya buat, tema telah diterapkan untuk menjaga konsistensi visual di seluruh tampilan.
 
-   - **Menambahkan Interaksi pada Item Card**
-     Setiap kartu memiliki `InkWell` untuk mendeteksi klik dan menampilkan `SnackBar`:
-     ```dart
-     class ItemCard extends StatelessWidget {
-       final ItemHomepage item;
+5. **Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?**
 
-       const ItemCard(this.item, {Key? key}) : super(key: key);
+   Navigasi dilakukan menggunakan widget `Navigator` dan metode `push`, `pop`, dan `pushReplacement()`. `LeftDrawer` berfungsi untuk navigasi aplikasi.
 
-       @override
-       Widget build(BuildContext context) {
-         return Material(
-           color: Theme.of(context).colorScheme.secondary,
-           borderRadius: BorderRadius.circular(12),
-           child: InkWell(
-             onTap: () {
-               ScaffoldMessenger.of(context)
-                 ..hideCurrentSnackBar()
-                 ..showSnackBar(
-                   SnackBar(content: Text("Kamu telah menekan tombol ${item.name}"))
-                 );
-             },
-             child: Column(
-               children: [
-                 Icon(item.icon, color: Colors.white, size: 30),
-                 Text(item.name, style: const TextStyle(color: Colors.white)),
-               ],
-             ),
-           ),
-         );
-       }
-     }
-     ```
+   Navigasi pada kode:
+   ```dart
+   ...
+   Navigator.push(
+     context,
+     MaterialPageRoute(builder: (context) => ProductEntryFormPage()),
+   );
+   ...
+   ```
+   ```dart
+   ...
+   onPressed: () {
+    Navigator.pop(context);
+   },
+   ...
+   ```
+   ```dart
+   ...
+   Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+        builder: (context) => MyHomePage(),
+    ),
+   );
+   ...
+   ```
 
-### **Referensi**
 
-- **Layouts and Forms**:
-
-  - https://scele.cs.ui.ac.id/pluginfile.php/240691/mod_resource/content/2/09%20-%20Layouts%20and%20Forms.pdf
-
-- **Flutter Documentation**:
-
-  - https://docs.flutter.dev/
+### Referensi
+- [Dokumentasi Flutter](https://flutter.dev/docs)
+- [09 - Layouts and Forms](https://scele.cs.ui.ac.id/pluginfile.php/240691/mod_resource/content/2/09%20-%20Layouts%20and%20Forms.pdf)

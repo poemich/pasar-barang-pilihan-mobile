@@ -4,7 +4,7 @@
             "outputFile": "com.example.pasar_barang_pilihan.app-mergeDebugResources-4:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Kuliah\\Term3\\PBP\\pasar_barang_pilihan\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "C:\\Storage\\Kuliah\\Term3\\PBP\\pasar_barang_pilihan\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

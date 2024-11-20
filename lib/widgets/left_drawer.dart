@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:pasar_barang_pilihan/screens/menu.dart';
+import 'package:pasar_barang_pilihan/screens/list_productentry.dart';
+import 'package:pasar_barang_pilihan/screens/menu.dart'; // Ensure correct import after refactoring
 import 'package:pasar_barang_pilihan/screens/productentry_form.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -29,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(8)),
                 Text(
-                  "Pasarnya barang-barang pilihan!",
+                  "Pasarnya Barang Barang Pilihan!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -38,35 +37,43 @@ class LeftDrawer extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Halaman Utama'),
-
-            // Redirect ke MyHomePage
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyHomePage(),
-                ));
+                ),
+              );
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
+            leading: const Icon(Icons.add_circle),
             title: const Text('Tambah Produk'),
-
-            // Redirect to ProductEntryFormPage
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductEntryFormPage()
-                )
+                  builder: (context) => const ProductEntryFormPage(),
+                ),
               );
             },
-          )
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_cart),
+            title: const Text('Daftar Product'),
+            onTap: () {
+              // Route menu ke halaman mood
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+              );
+            },
+          ),
         ],
       ),
     );

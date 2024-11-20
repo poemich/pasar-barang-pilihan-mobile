@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pasar_barang_pilihan/screens/menu.dart';
 import 'package:pasar_barang_pilihan/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ProductEntryFormPage extends StatefulWidget {
   const ProductEntryFormPage({super.key});
 
   @override
-  State<ProductEntryFormPage> createState() => _ProductEntryFormPage();
+  State<ProductEntryFormPage> createState() => _ProductEntryFormPageState();
 }
 
-class _ProductEntryFormPage extends State<ProductEntryFormPage> {
+class _ProductEntryFormPageState extends State<ProductEntryFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _product = "";
   String _description = "";
@@ -16,6 +21,7 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -26,7 +32,7 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
-      drawer: const LeftDrawer(),
+      drawer: const LeftDrawer(), // Ensure the drawer is included
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -37,11 +43,11 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: "Nama",
-                    hintText: "Nama produk",
+                    hintText: "Product",
+                    labelText: "Product",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                    )
+                    ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
@@ -50,18 +56,18 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Nama produk tidak boleh kosong";
+                      return "Product tidak boleh kosong!";
                     }
                     return null;
                   },
-                )
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Deskripsi",
-                    labelText: "Deskripsi produk",
+                    hintText: "Description",
+                    labelText: "Description",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -73,7 +79,7 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Deskripsi produk tidak boleh kosong!";
+                      return "Description tidak boleh kosong!";
                     }
                     return null;
                   },
@@ -83,8 +89,8 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Harga",
-                    labelText: "Harga produk",
+                    hintText: "Price",
+                    labelText: "Price",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
@@ -96,10 +102,10 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Harga produk tidak boleh kosong!";
+                      return "Price tidak boleh kosong!";
                     }
                     if (int.tryParse(value) == null) {
-                      return "Harga produk harus berupa angka!";
+                      return "Price harus berupa angka!";
                     }
                     return null;
                   },
@@ -112,37 +118,37 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                   child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
-                          Theme.of(context).colorScheme.primary),
+                        Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Produk berhasil tersimpan'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama Produk: $_product'),
-                                    Text('Deskripsi Produk: $_description'),
-                                    Text('Harga Produk $_price'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                          // Kirim ke Django dan tunggu respons
+                          final response = await request.postJson(
+                              "http://10.0.2.2:8000/create-flutter/",  // Updated URL for Android emulator
+                              jsonEncode(<String, dynamic>{            // Changed to dynamic for numeric value
+                                  'product': _product,
+                                  'price': _price,    // Send as number, not string
+                                  'description': _description,
+                              }));
+                          if (context.mounted) {
+                              if (response['status'] == 'success') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                  content: Text("Product baru berhasil disimpan!"),
+                                  ));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                                  );
+                              } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                      content:
+                                          Text(response['message'] ?? "Terdapat kesalahan, silakan coba lagi."),
+                                  ));
+                              }
+                          }
                       }
                     },
                     child: const Text(
@@ -153,7 +159,7 @@ class _ProductEntryFormPage extends State<ProductEntryFormPage> {
                 ),
               ),
             ],
-          )
+          ),
         ),
       ),
     );

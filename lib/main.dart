@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pasar_barang_pilihan/screens/menu.dart';
+import 'package:pasar_barang_pilihan/screens/login.dart';
+import 'package:pasar_barang_pilihan/screens/menu.dart'; // Adjusted import path
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +13,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pasar Barang Pilihan',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-        ).copyWith(
-          secondary: Colors.lightBlueAccent
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+        title: 'Pasar Barang Pilihan',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.blue,
+          ).copyWith(
+            secondary: Colors.lightBlueAccent
+          ),
         ),
-        useMaterial3: true,
+        home: const LoginPage(),
       ),
-      home: MyHomePage(),
     );
   }
 }

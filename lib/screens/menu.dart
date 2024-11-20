@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pasar_barang_pilihan/widgets/left_drawer.dart';
-import 'package:pasar_barang_pilihan/widgets/product_cart.dart';
+import 'package:pasar_barang_pilihan/widgets/product_card.dart';
 
 class MyHomePage extends StatelessWidget {
   final String npm = '2306245011'; // NPM
